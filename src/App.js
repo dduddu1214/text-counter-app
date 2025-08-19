@@ -302,6 +302,28 @@ const MainContent = () => {
             </div>
           </div>
         </div>
+
+        {/* 하단 크레딧 */}
+        <div className="mt-12 text-center">
+          <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-full ${
+            isDarkMode 
+              ? 'bg-gray-800/50 backdrop-blur-sm border border-gray-700/50' 
+              : 'bg-white/70 backdrop-blur-sm border border-gray-200/50'
+          }`}>
+            <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              Made by
+            </span>
+            <a
+              href="https://github.com/devdduddu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+            >
+              devdduddu
+            </a>
+            <span className="text-blue-500">💙</span>
+          </div>
+        </div>
       </div>
     </div>
   );

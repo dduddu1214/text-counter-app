@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "글자수세기",
+  "name": "글자 수 세기 - 실시간 텍스트 분석 도구",
+  "description": "블로그, SNS, 비즈니스 문서 작성을 위한 스마트한 글자수 카운터",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,8 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#3B82F6",
+  "background_color": "#F8FAFC",
+  "categories": ["productivity", "utilities", "education"],
+  "lang": "ko"
 }
