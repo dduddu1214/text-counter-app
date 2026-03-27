@@ -4,71 +4,115 @@
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css');
 
-/* 기본 폰트 설정 */
+/* 기본 폰트 */
 body {
   font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 애니메이션 추가 */
+/* 부드러운 등장 애니메이션 */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+@keyframes progress-stripe {
+  0% { background-position: 1rem 0; }
+  100% { background-position: 0 0; }
 }
 
 .animate-fadeInUp {
-  animation: fadeInUp 0.5s ease-out;
+  animation: fadeInUp 0.4s ease-out both;
+}
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out both;
+}
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out both;
+}
+.animate-pulse-soft {
+  animation: pulse-soft 1.5s ease-in-out infinite;
 }
 
 /* 커스텀 스크롤바 */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
-
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(243, 244, 246, 0.3);
-  border-radius: 2px;
+  background: transparent;
 }
-
-.dark .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(55, 65, 81, 0.3);
-}
-
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(107, 114, 128, 0.5);
-  border-radius: 2px;
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 999px;
 }
-
-.dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.5);
-}
-
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 114, 128, 0.7);
+  background: rgba(148, 163, 184, 0.5);
 }
 
-.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.7);
-}
-
-/* 입력 포커스 스타일 개선 */
-input:focus,
-textarea:focus,
-select:focus {
+/* 포커스 & 선택 */
+input:focus, textarea:focus, select:focus {
   outline: none;
 }
-
-/* 선택 텍스트 스타일 */
 ::selection {
-  background-color: rgba(59, 130, 246, 0.3);
+  background-color: rgba(59, 130, 246, 0.2);
   color: inherit;
 }
-
 .dark ::selection {
-  background-color: rgba(96, 165, 250, 0.3);
+  background-color: rgba(96, 165, 250, 0.25);
+}
+
+/* 검색 하이라이트 오버레이 */
+.highlight-backdrop {
+  color: transparent;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  pointer-events: none;
+}
+.highlight-backdrop mark {
+  color: transparent;
+  background-color: rgba(250, 204, 21, 0.4);
+  border-radius: 2px;
+  padding: 1px 0;
+}
+.dark .highlight-backdrop mark {
+  background-color: rgba(234, 179, 8, 0.3);
+}
+
+/* 드래그 앤 드롭 오버레이 */
+.drag-overlay {
+  animation: fadeIn 0.15s ease-out;
+}
+
+/* 진행률 바 줄무늬 애니메이션 */
+.progress-bar-striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+  animation: progress-stripe 0.6s linear infinite;
+}
+
+/* 토스트 알림 */
+.toast-enter {
+  animation: slideDown 0.3s ease-out both;
 }

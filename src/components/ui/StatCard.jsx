@@ -1,30 +1,27 @@
 import React from 'react';
-import { useApp } from '../../context/AppContext';
 
-const StatCard = ({ icon: Icon, value, label, color, delay = 0, isAnimating = false }) => {
-  const { isDarkMode } = useApp();
-
+const StatCard = ({ icon: Icon, value, label, color, isAnimating = false }) => {
   return (
-    <div 
-      className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl ${
-        isDarkMode ? 'bg-gray-800/50 backdrop-blur-sm border border-gray-700/50' : 'bg-white/70 backdrop-blur-sm border border-gray-200/50'
-      } ${isAnimating ? 'animate-pulse' : ''}`}
-      style={{ animationDelay: `${delay}ms` }}
+    <div
+      className={`relative rounded-xl p-4 transition-all duration-200 border bg-white dark:bg-slate-800/80 border-slate-100 dark:border-slate-700/80 hover:shadow-md group ${
+        isAnimating ? 'animate-pulse-soft' : ''
+      }`}
+      role="status"
+      aria-label={`${label}: ${value.toLocaleString()}`}
     >
-      <div className="flex items-center justify-between">
-        <div>
-          <div className={`text-3xl font-bold mb-1 bg-gradient-to-r ${color} bg-clip-text text-transparent`}>
+      <div className="flex items-center gap-3">
+        <div className={`p-2 rounded-lg bg-gradient-to-br ${color} text-white shadow-sm`}>
+          <Icon className="w-4 h-4" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className={`text-2xl font-bold tracking-tight text-slate-800 dark:text-white`}>
             {value.toLocaleString()}
           </div>
-          <div className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+          <div className="text-xs font-medium text-slate-400 dark:text-slate-500 truncate">
             {label}
           </div>
         </div>
-        <div className={`p-3 rounded-xl bg-gradient-to-br ${color.replace('text-', 'from-').replace(' to-', ' to-')} text-white opacity-80 group-hover:opacity-100 transition-opacity`}>
-          <Icon className="w-6 h-6" />
-        </div>
       </div>
-      <div className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${color.replace('text-', 'from-').replace(' to-', ' to-')} opacity-60`} />
     </div>
   );
 };

@@ -54,7 +54,7 @@ export const calculateReadingTime = (wordCount) => {
  * 특정 단어/구문 검색
  */
 export const searchInText = (text, searchTerm) => {
-  if (!searchTerm.trim()) return 0;
+  if (!searchTerm || !searchTerm.trim()) return 0;
   const regex = new RegExp(searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
   return (text.match(regex) || []).length;
 };
@@ -63,7 +63,7 @@ export const searchInText = (text, searchTerm) => {
  * 텍스트 통계 계산 (평균 단어 길이, 최장/최단 단어)
  */
 export const calculateTextStatistics = (text) => {
-  const words = text.match(/[가-힣a-zA-Z]+/g) || [];
+  const words = text.match(/[가-힣a-zA-Z0-9]+/g) || [];
   
   if (words.length === 0) {
     return { 

@@ -1,48 +1,55 @@
-import React from 'react';
-import { TrendingUp, Clock } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { Clock, HardDrive, Ruler, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
 const AdvancedStats = () => {
-  const { isDarkMode, textAnalysis } = useApp();
-  const stats = textAnalysis.getTextStats();
+  const { textAnalysis, text } = useApp();
+  const stats = useMemo(() => textAnalysis.getTextStats(), [textAnalysis]);
+
+  if (!text.trim()) return null;
+
+  const items = [
+    { icon: HardDrive, label: '바이트', value: textAnalysis.getByteCount().toLocaleString(), unit: 'B' },
+    { icon: Clock, label: '읽기 시간', value: textAnalysis.getReadingTime(), unit: '분' },
+    { icon: Ruler, label: '평균 단어 길이', value: stats.avgLength, unit: '자' },
+  ];
 
   return (
-    <div className={`rounded-2xl p-6 transition-all duration-300 ${
-      isDarkMode ? 'bg-gray-800/50 backdrop-blur-sm border border-gray-700/50' : 'bg-white/70 backdrop-blur-sm border border-gray-200/50'
-    }`}>
-      <h3 className="font-bold mb-4 text-lg flex items-center gap-2">
-        <TrendingUp className="w-5 h-5" />
-        상세 분석
-      </h3>
-      
-      <div className="space-y-4">
-        <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20">
-          <span className="text-sm font-medium">바이트 수</span>
-          <span className="font-bold text-blue-600">{textAnalysis.getByteCount().toLocaleString()}</span>
-        </div>
-        
-        <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20">
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4" />
-            <span className="text-sm font-medium">읽기 시간</span>
-          </div>
-          <span className="font-bold text-emerald-600">{textAnalysis.getReadingTime()}분</span>
-        </div>
-        
-        <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20">
-          <span className="text-sm font-medium">평균 단어 길이</span>
-          <span className="font-bold text-purple-600">{stats.avgLength}자</span>
-        </div>
-        
-        {stats.longest && (
-          <div className="space-y-2">
-            <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-100/70'}`}>
-              <div className="text-xs font-medium text-gray-500 mb-1">가장 긴 단어</div>
-              <div className="font-mono text-sm break-all">{stats.longest}</div>
+    <div className="rounded-xl border p-4 bg-white dark:bg-slate-800/80 border-slate-100 dark:border-slate-700/80">
+      <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">상세 분석</h3>
+
+      <div className="space-y-2.5">
+        {items.map(({ icon: Icon, label, value, unit }) => (
+          <div key={label} className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+              <Icon className="w-3.5 h-3.5" />
+              <span className="text-xs">{label}</span>
             </div>
-            <div className={`p-3 rounded-xl ${isDarkMode ? 'bg-gray-700/50' : 'bg-gray-100/70'}`}>
-              <div className="text-xs font-medium text-gray-500 mb-1">가장 짧은 단어</div>
-              <div className="font-mono text-sm break-all">{stats.shortest}</div>
+            <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+              {value}<span className="text-xs font-normal text-slate-400 ml-0.5">{unit}</span>
+            </span>
+          </div>
+        ))}
+
+        {stats.longest && (
+          <div className="pt-2.5 mt-2.5 border-t border-slate-100 dark:border-slate-700/80 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                <ArrowUpRight className="w-3.5 h-3.5 text-emerald-500" />
+                <span className="text-xs">가장 긴 단어</span>
+              </div>
+              <span className="text-xs font-mono font-medium text-slate-600 dark:text-slate-400 max-w-[120px] truncate" title={stats.longest}>
+                {stats.longest}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                <ArrowDownRight className="w-3.5 h-3.5 text-amber-500" />
+                <span className="text-xs">가장 짧은 단어</span>
+              </div>
+              <span className="text-xs font-mono font-medium text-slate-600 dark:text-slate-400 max-w-[120px] truncate" title={stats.shortest}>
+                {stats.shortest}
+              </span>
             </div>
           </div>
         )}

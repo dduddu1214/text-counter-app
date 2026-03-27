@@ -1,46 +1,66 @@
 import React, { useCallback } from 'react';
 import { Download } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { exportToJson, exportToCsv } from '../../utils/fileHandler';
+import { generateExportData } from '../../utils/textAnalyzer';
 
 const ExportButton = () => {
   const { text, textAnalysis } = useApp();
 
-  const exportResults = useCallback(() => {
+  const getExportData = useCallback(() => {
     const stats = textAnalysis.getTextStats();
-    const results = {
-      text: text,
-      statistics: {
-        characters: textAnalysis.getCharCount(),
-        words: textAnalysis.getWordCount(),
-        paragraphs: textAnalysis.getParagraphCount(),
-        lines: textAnalysis.getLineCount(),
-        bytes: textAnalysis.getByteCount(),
-        readingTimeMinutes: textAnalysis.getReadingTime(),
-        averageWordLength: stats.avgLength,
+    const analysisResults = {
+      characterCount: textAnalysis.getCharCount(),
+      wordCount: textAnalysis.getWordCount(),
+      paragraphCount: textAnalysis.getParagraphCount(),
+      lineCount: textAnalysis.getLineCount(),
+      byteCount: textAnalysis.getByteCount(),
+      readingTime: textAnalysis.getReadingTime(),
+      textStats: {
+        averageLength: stats.avgLength,
         longestWord: stats.longest,
-        shortestWord: stats.shortest
+        shortestWord: stats.shortest,
+        totalWords: textAnalysis.getWordCount(),
       },
-      timestamp: new Date().toISOString()
     };
-    
-    const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `text-analysis-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    return generateExportData(text, analysisResults);
   }, [text, textAnalysis]);
 
+  const handleJsonExport = useCallback(() => {
+    try {
+      exportToJson(getExportData());
+    } catch (error) {
+      console.error('JSON 내보내기 실패:', error);
+    }
+  }, [getExportData]);
+
+  const handleCsvExport = useCallback(() => {
+    try {
+      exportToCsv(getExportData());
+    } catch (error) {
+      console.error('CSV 내보내기 실패:', error);
+    }
+  }, [getExportData]);
+
   return (
-    <button
-      onClick={exportResults}
-      disabled={!text}
-      className="w-full group flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl hover:from-indigo-600 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all duration-200 hover:scale-105 shadow-xl hover:shadow-purple-500/25"
-    >
-      <Download className="w-5 h-5 group-hover:scale-110 transition-transform" />
-      결과 내보내기
-    </button>
+    <div className="flex gap-2">
+      <button
+        onClick={handleJsonExport}
+        disabled={!text}
+        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-800 hover:bg-slate-700 dark:hover:bg-white disabled:opacity-40 disabled:pointer-events-none shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500"
+      >
+        <Download className="w-4 h-4" />
+        JSON
+      </button>
+      <button
+        onClick={handleCsvExport}
+        disabled={!text}
+        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 disabled:opacity-40 disabled:pointer-events-none shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500"
+      >
+        <Download className="w-4 h-4" />
+        CSV
+      </button>
+    </div>
   );
 };
 

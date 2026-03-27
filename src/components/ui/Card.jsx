@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApp } from '../../context/Appcontext';
+import { useApp } from '../../context/AppContext';
 
 const Card = ({ children, className = '', ...props }) => {
   const { isDarkMode } = useApp();

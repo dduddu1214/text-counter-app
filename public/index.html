@@ -2,47 +2,90 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="any" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#3B82F6" />
-    
+    <meta name="theme-color" content="#3B82F6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://text-counter-app-theta.vercel.app/" />
+
     <!-- 기본 메타 정보 -->
-    <meta name="description" content="실시간 텍스트 분석 도구 - 블로그, SNS, 비즈니스 문서 작성을 위한 스마트한 글자수 카운터. 인스타그램, 트위터, 블로그 포스팅에 최적화된 목적별 프리셋 제공." />
-    <meta name="keywords" content="글자수세기, 텍스트카운터, 단어수세기, 인스타그램글자수, 트위터글자수, 블로그작성도구, SNS도구" />
+    <meta name="description" content="실시간 글자수 세기 도구 - 인스타그램, 트위터, 블로그, 비즈니스 문서 작성을 위한 스마트한 텍스트 분석기. 글자수, 단어수, 문단수, 바이트 수, 읽기 시간을 실시간으로 확인하세요." />
+    <meta name="keywords" content="글자수세기, 글자수 세기, 텍스트카운터, 단어수세기, 문자수세기, 인스타그램 글자수, 트위터 글자수, 블로그 글자수, SNS 글자수 제한, 바이트 수 계산, 읽기 시간 계산" />
     <meta name="author" content="devdduddu" />
-    
-    <!-- Open Graph (페이스북, 링크드인 등) -->
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://text-counter-app-theta.vercel.app/" />
     <meta property="og:title" content="글자 수 세기 - 실시간 텍스트 분석 도구" />
-    <meta property="og:description" content="블로그, SNS, 비즈니스 문서 작성을 위한 스마트한 글자수 카운터. 인스타그램, 트위터, 블로그 포스팅에 최적화된 목적별 프리셋을 제공합니다." />
+    <meta property="og:description" content="인스타그램, 트위터, 블로그 글자수 제한을 실시간으로 확인하세요. 글자수, 단어수, 바이트 수, 읽기 시간까지 한번에 분석합니다." />
     <meta property="og:image" content="https://text-counter-app-theta.vercel.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="글자 수 세기" />
     <meta property="og:locale" content="ko_KR" />
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://text-counter-app-theta.vercel.app/" />
     <meta name="twitter:title" content="글자 수 세기 - 실시간 텍스트 분석 도구" />
-    <meta name="twitter:description" content="블로그, SNS, 비즈니스 문서 작성을 위한 스마트한 글자수 카운터" />
-    <meta name="twitter:image" content="https://text-counter-app-theta.vercel.app/twitter-image.png" />
+    <meta name="twitter:description" content="인스타그램, 트위터, 블로그 글자수 제한을 실시간으로 확인하세요." />
+    <meta name="twitter:image" content="https://text-counter-app-theta.vercel.app/og-image.png" />
     <meta name="twitter:creator" content="@devdduddu" />
-    
-    <!-- 추가 메타 정보 -->
-    <meta name="robots" content="index, follow" />
+
+    <!-- 크롤링 -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
     <meta name="format-detection" content="telephone=no" />
-    
-    <!-- PWA 관련 -->
+
+    <!-- PWA -->
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    
-    <title>글자 수 세기 - 실시간 텍스트 분석 도구 | devdduddu</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="글자수세기" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <title>글자 수 세기 - 실시간 텍스트 분석 도구 | 글자수, 단어수, 바이트 수 카운터</title>
+
+    <!-- 구조화 데이터 (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "글자 수 세기",
+      "alternateName": "Text Counter",
+      "url": "https://text-counter-app-theta.vercel.app/",
+      "description": "인스타그램, 트위터, 블로그, 비즈니스 문서 작성을 위한 실시간 글자수 세기 도구. 글자수, 단어수, 문단수, 바이트 수, 읽기 시간을 분석합니다.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "devdduddu",
+        "url": "https://github.com/dduddu1214"
+      },
+      "inLanguage": "ko",
+      "isAccessibleForFree": true
+    }
+    </script>
   </head>
   <body>
     <noscript>이 앱을 실행하려면 JavaScript를 활성화해야 합니다.</noscript>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+    </script>
   </body>
 </html>
